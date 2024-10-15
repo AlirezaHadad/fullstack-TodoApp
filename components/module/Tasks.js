@@ -64,7 +64,7 @@ function Tasks({ data, next, back, fetchTodos }) {
           </div>
           <div className="buttons">
               <button
-                className="button-back"
+                className="button-delete"
                 onClick={() => deleteHandler(i._id)}
               >
                 <BiLeftArrow />
