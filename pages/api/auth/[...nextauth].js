@@ -5,12 +5,13 @@ import UserTodo from "../../../models/User";
 import { verifyPassword } from "../../../utils/auth";
 import connectDB from "../../../utils/connectDB";
 
+// تنظیمات احراز هویت
 const authOptions = {
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt" }, // استفاده از JWT برای مدیریت جلسه
   providers: [
     CredentialsProvider({
       id: "credentials",
-      name: "credentials",
+      name: "Credentials",
       credentials: {
         email: {
           label: "Email",
@@ -25,29 +26,31 @@ const authOptions = {
       async authorize(credentials, req) {
         const { email, password } = credentials;
 
+        // اتصال به پایگاه داده
         try {
           await connectDB();
         } catch (error) {
-          throw new Error("Error in connecting to DB!");
+          throw new Error("Error in connecting to DB!"); // خطا در اتصال به DB
         }
 
+        // بررسی وجود ایمیل و رمز عبور
         if (!email || !password) {
-          throw new Error("Invalid Data!");
+          throw new Error("Invalid Data!"); // داده‌های نامعتبر
         }
 
-        const user = await UserTodo.findOne({ email: email });
+        const user = await UserTodo.findOne({ email: email }); // جستجوی کاربر
 
-        if (!user) throw new Error("User doesn't exist!");
+        if (!user) throw new Error("User doesn't exist!"); // کاربر وجود ندارد
 
-        const isValid = await verifyPassword(password, user.password);
+        const isValid = await verifyPassword(password, user.password); // بررسی رمز عبور
 
-        if (!isValid) throw new Error("Username or password is incorrect!");
+        if (!isValid) throw new Error("Username or password is incorrect!"); // رمز عبور نادرست
 
-        return { email };
+        return { email }; // بازگشت اطلاعات کاربر
       },
     }),
   ],
-  secret: process.env.SECRET,
+  secret: process.env.SECRET, // کلید مخفی برای JWT
 };
 
-export default NextAuth(authOptions);
+export default NextAuth(authOptions); // صادر کردن تنظیمات احراز هویت
