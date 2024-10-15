@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
+
 import { RiMastodonLine } from "react-icons/ri";
 import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { MdOutlineDelete } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 
 function Tasks({ data, next, back, fetchTodos }) {  
 
@@ -67,7 +69,7 @@ function Tasks({ data, next, back, fetchTodos }) {
                 className="button-delete"
                 onClick={() => deleteHandler(i._id)}
               >
-                <BiLeftArrow />
+                <MdOutlineDelete />
                 delete
               </button>
               <button
@@ -75,7 +77,7 @@ function Tasks({ data, next, back, fetchTodos }) {
                 onClick={()=>editHandler(i._id)}
               >
                 edit
-                <BiRightArrow />
+                <CiEdit />
               </button>
           </div>
         </div>
