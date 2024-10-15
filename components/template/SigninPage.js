@@ -23,7 +23,7 @@ function SigninPage() {
     });
     console.log(res);
     
-    if (!res.error) router.push("/");
+    if (res.status === 200) router.push("/");
   };
 
   return (
